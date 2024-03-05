@@ -32,3 +32,13 @@ logging:
     com:
      cnsn:
        gatewayserver: DEBUG
+resilience4j:
+  circuitbreaker:
+    configs:
+      default: # circuitbreaker name here.
+        sliding-window-size: 10 # at least monitor 10 request to open or close
+        permitted-number-of-calls-in-half-open-state: 2
+        failure-rate-threshold: 50 # 50% fail to turn close state
+        wait-duration-in-open-state:
+          seconds: 10
+

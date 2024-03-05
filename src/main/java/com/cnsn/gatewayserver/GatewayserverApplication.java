@@ -21,7 +21,8 @@ public class GatewayserverApplication {
 				.route(p-> p
 						.path("/bank/accounts/**") // if path equals to
 						.filters( f -> f.rewritePath("/bank/accounts/(?<segment>.*)","/${segment}")
-								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString()))
+								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+								.circuitBreaker(config -> config.setName("accountsCircuitBreaker")))
 						.uri("lb://ACCOUNTS")) // forward request to actual microservice
 				.route(p -> p
 						.path("/bank/cards/**")
