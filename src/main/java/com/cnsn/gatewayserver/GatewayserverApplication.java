@@ -50,7 +50,9 @@ public class GatewayserverApplication {
 				.route(p -> p
 						.path("/bank/loans/**")
 						.filters( f -> f.rewritePath("/bank/loans/(?<segment>.*)","/${segment}")
-								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString()))
+								.addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+								.requestRateLimiter(config -> config.setRateLimiter(redisRateLimiter())
+										.setKeyResolver(useKeyResolver())))
 						.uri("lb://LOANS")).build();
 
 	}
