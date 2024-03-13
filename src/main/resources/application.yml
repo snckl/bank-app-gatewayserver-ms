@@ -1,4 +1,9 @@
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: "http://localhost:7080/realms/master/protocol/openid-connect/certs"
   application:
     name: "gatewayserver"
   config:
@@ -11,7 +16,7 @@ spring:
           lower-case-service-id: true
       httpclient:
         connect-timeout: 1000
-        response-timeout: 2s
+        response-timeout: 10s # gateway server will wait for 10 seconds for response
   data:
     redis:
       connect-timeout: 2s
@@ -50,4 +55,3 @@ resilience4j:
         failure-rate-threshold: 50 # 50% fail to turn close state
         wait-duration-in-open-state:
           seconds: 10
-
